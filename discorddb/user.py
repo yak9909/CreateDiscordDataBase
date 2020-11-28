@@ -1,19 +1,22 @@
 import os
 import json
-from modules import tools
+from discorddb import tools, initialize
 
 
 class User:
-    def __init__(self, user_id, server_id=None):
+    def __init__(self, user_id, server_id=None, root="../"):
+        self.root = root
         self.id = user_id
         self.server_id = server_id
 
+        initialize.init(self.root)
+
         if self.server_id is None:
-            self.user_default_path = "data/global_user_default.json"
-            self.file_path = f"data/users/{self.id}.json"
+            self.user_default_path = f"{root}data/user-default.json"
+            self.file_path = f"{root}data/users/{self.id}.json"
         else:
-            self.user_default_path = "data/servers/user_default.json"
-            self.file_path = f"{self.server_id}/users/{self.id}.json"
+            self.user_default_path = f"{root}data/servers/user-default.json"
+            self.file_path = f"{root}{self.server_id}/users/{self.id}.json"
 
         self.data = self.register()
 

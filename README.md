@@ -6,6 +6,7 @@
 ・サーバーのデータを保存<br>
 ・ユーザーデータ・サーバーデータの初期設定を指定<br>
 <br>
+ちゃんと正しく使えばバグらないはずです・・・(例外処理を実装してない)<br>
 必要なパッケージ<br>
 discord.py 1.5.1  : https://github.com/Rapptz/discord.py
 
@@ -20,7 +21,7 @@ from discorddb.user import User
 でuser.pyをインポートし、
 
 ```python
-User(ユーザーのClientID, サーバーID)
+User(user_id=ユーザーのClientID, server_id=サーバーID, root=dataディレクトリの場所)
 ```
 
 で呼び出します。このクラスを呼び出した時点で、ユーザーのデータが作られます<br>
@@ -39,7 +40,7 @@ global_user_default.json に
 方法としては
 
 ```python
-user = User(ユーザーのClientID, サーバーID)
+user = User(user_id=ユーザーのClientID, server_id=サーバーID, root=dataディレクトリの場所)
 print(user.data["this"]) # global-user
 ```
 
@@ -65,7 +66,7 @@ from discorddb.server import Server
 でserver.pyをインポートし
 
 ```python
-server = Server(サーバーID)
+server = Server(server_id=サーバーID, root=dataディレクトリの場所)
 ```
 
 でServerクラスを呼び出します<br>
@@ -82,7 +83,7 @@ users/ には User() で、グローバルを無効（サーバーIDを指定す
 Server() も User() 同様に
 
 ```python
-server = Server(サーバーID)
+server = Server(server_id=サーバーID, root=dataディレクトリの場所)
 server.data["this"] = "test"
 ```
 

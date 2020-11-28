@@ -1,19 +1,23 @@
 import os
 import json
-from modules import tools
+from discorddb import tools, initialize
 
 
 class Server:
-    def __init__(self, guild_id):
+    def __init__(self, guild_id, root="../"):
+        self.root = root
         self.id = guild_id
         if self.id == 0:
             return
+
+        initialize.init(self.root)
+
         self.dir_path = f"data/servers/{self.id}"
 
         self.logs_dir_path = f"{self.dir_path}/logs"
         self.users_dir_path = f"{self.dir_path}/users"
         self.data_path = f"{self.dir_path}/data.json"
-        self.server_default_path = "data/servers/server_default.json"
+        self.server_default_path = "data/servers/server-default.json"
 
         self.data = self.register()
 
@@ -35,9 +39,9 @@ class Server:
         return server_data
     
     def update_channel(self, channel):
-        for dir in os.listdir(f"{self.logs_dir_path}"):
-            dir_split = dir.split(".")
-            if dir_split[0] == str(channel.id):
+        for channel_logs in os.listdir(f"{self.logs_dir_path}"):
+            channel_id = channel_logs.split(".")[0]
+            if channel_id == str(channel.id):
                 return True
 
         os.mkdir(f"{self.logs_dir_path}/{channel.id}")
@@ -63,11 +67,11 @@ class Server:
             log_file = f"{self.logs_dir_path}/{message.channel.id}.txt"
 
             if message.content:
-                tools.file_addline(message_file, f"{message.author} | {message.author.id}\n{message.content}")
-                tools.file_addline(log_file, f"({message.channel.name}){message.author}: {message.content}\n\n")
+                tools.add_line(message_file, f"{message.author} | {message.author.id}\n{message.content}")
+                tools.add_line(log_file, f"({message.channel.name}){message.author}: {message.content}\n\n")
             else:
-                tools.file_addline(message_file, f"{message.author} | {message.author.id}\n(File)")
-                tools.file_addline(log_file, f"({message.channel.name}){message.author}: (File)\n\n")
+                tools.add_line(message_file, f"{message.author} | {message.author.id}\n(File)")
+                tools.add_line(log_file, f"({message.channel.name}){message.author}: (File)\n\n")
 
     def update(self):
         f = tools.read_file(self.data_path, True)
