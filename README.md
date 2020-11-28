@@ -13,7 +13,7 @@ discord.py 1.5.1  : https://github.com/Rapptz/discord.py
 ・サーバーのデータを保存<br>
 ・ユーザーデータ・サーバーデータの初期設定を指定
 
-# modules/user.py って何？
+# user.py って何？
 ユーザーデータを作成・編集するためのモジュールです<br>
 使い方としては
 
@@ -58,7 +58,7 @@ user.update()
 update()で、書き換えたデータをファイルに上書きします<br>
 このメソッドを実行しないとファイルが書き換わらないので注意です
 
-# modules/server.py って何？
+# server.py って何？
 サーバーデータを作成・編集するためのモジュールです<br>
 使い方は
 
