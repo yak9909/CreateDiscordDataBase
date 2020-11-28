@@ -18,7 +18,7 @@ discord.py 1.5.1  : https://github.com/Rapptz/discord.py
 使い方としては
 
 ```python
-from modules.user import User
+from discorddb.user import User
 ```
 
 でuser.pyをインポートし、
@@ -63,7 +63,7 @@ update()で、書き換えたデータをファイルに上書きします
 使い方は
 
 ```python
-from modules.server import Server
+from discorddb.server import Server
 ```
 
 でserver.pyをインポートし
